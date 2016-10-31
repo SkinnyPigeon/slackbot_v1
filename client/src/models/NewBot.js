@@ -41,14 +41,14 @@ NewBot.prototype._welcomeMessage = function () {
 
 NewBot.prototype._onMessage = function( message ) {
     if ( this._isChatMessage( message ) &&
-         this._isChannelConversation( message ) 
-         && this._isNotFromNewBot( message )) {
-    this._replyWithRandomJoke( message );
+         this._isChannelConversation( message ) &&
+         !this._isNotFromNewBot( message )) {
+    this.sayHi();
     }
 };
 
 NewBot.prototype.sayHi = function( message ) {
-    this.postMessageToChannel('general', 'Hello channel!');
+    this.postMessageToChannel( this.channels[1].name, "Hello, I am replying" );
 }
 
 NewBot.prototype._isChatMessage = function ( message ) {
@@ -59,7 +59,7 @@ NewBot.prototype._isChannelConversation = function( message ) {
     return typeof message.channel === 'string';
 };
 
-NewBot.prototype._isFromNewBot = function( message ) {
+NewBot.prototype._isNotFromNewBot = function( message ) {
     console.log( message );
     return message.user === this.id;
 };
@@ -67,11 +67,6 @@ NewBot.prototype._isFromNewBot = function( message ) {
 NewBot.prototype._isMentioningChuckNorris = function( message ) {
     return message.text.toLowerCase().indexOf( 'chuck norris' ) > -1 ||
         message.text.toLowerCase().indexOf( this.name ) > -1;
-};
-
-NewBot.prototype._replyWithRandomJoke = function( originalMessage ) {
-    this.postMessageToChannel( 'general', 'Hello channel!' );
-    this.postMessageToUser( 'skinnypigeon', 'hello bro!' );
 };
 
 
