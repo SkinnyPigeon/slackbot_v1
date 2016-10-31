@@ -27,11 +27,12 @@ NewBot.prototype._onStart = function () {
 };
 
 NewBot.prototype._loadBotUser = function () {
-    var self = this;
-    this.user = this.users.filter( function( user ) {
-        return user.name === self.name;
-    })[0];
-    console.log( this.user );
+
+    for( var i = 0; i < this.users.length; i++ ) {
+        if( this.users[i].name === 'wedding-test-bot' ) {
+            this.id = this.users[i].id;
+        }
+    }
 };
 
 NewBot.prototype._welcomeMessage = function () {
@@ -39,21 +40,18 @@ NewBot.prototype._welcomeMessage = function () {
 };
 
 NewBot.prototype._onMessage = function( message ) {
-    console.log( message );
     if ( this._isChatMessage( message ) &&
-         this._isChannelConversation( message ) &&
-         !this._isFromNewBot( message )) {
-        this._replyWithRandomJoke( message );
+         this._isChannelConversation( message ) 
+         && this._isNotFromNewBot( message )) {
+    this._replyWithRandomJoke( message );
     }
 };
 
 NewBot.prototype.sayHi = function( message ) {
-    console.log( message );
     this.postMessageToChannel('general', 'Hello channel!');
 }
 
 NewBot.prototype._isChatMessage = function ( message ) {
-    console.log( message );
     return message.type === 'message' && Boolean( message.text );
 };
 
@@ -62,8 +60,8 @@ NewBot.prototype._isChannelConversation = function( message ) {
 };
 
 NewBot.prototype._isFromNewBot = function( message ) {
-    console.log( self );
-    return message.user === this.user.id;
+    console.log( message );
+    return message.user === this.id;
 };
 
 NewBot.prototype._isMentioningChuckNorris = function( message ) {
