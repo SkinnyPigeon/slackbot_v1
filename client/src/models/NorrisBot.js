@@ -112,6 +112,8 @@ NorrisBot.prototype._replyWithRandomJoke = function (originalMessage) {
     //     self.postMessageToChannel(channel.name, record.joke, {as_user: true});
     //     self.db.run('UPDATE jokes SET used = used + 1 WHERE id = ?', record.id);
     // });
+    this.postMessageToChannel('general', 'Hello channel!');
+    this.postMessageToUser('skinnypigeon', 'hello bro!');
 };
 
 NorrisBot.prototype._getChannelById = function (channelId) {
