@@ -24,7 +24,6 @@ NewBot.prototype._onStart = function () {
 };
 
 NewBot.prototype._loadBotUser = function () {
-
     for( var i = 0; i < this.users.length; i++ ) {
         if( this.users[i].name === 'wedding-test-bot' ) {
             this.id = this.users[i].id;
@@ -37,31 +36,29 @@ NewBot.prototype._welcomeMessage = function () {
 };
 
 NewBot.prototype._onMessage = function( message ) {
-    // console.log( message );
     if ( this._isChatMessage( message ) &&
          this._isChannelConversation( message ) &&
          !this._isFromNewBot( message )) {
-    this.handlePictures( message );
-    this.sayHi( message );
+    this._handlePictures( message );
+    this._handleText( message );
     }
 };
 
-NewBot.prototype.sayHi = function( message ) {
+NewBot.prototype._handleText = function( message ) {
     console.log( message );
     if( message.text.charAt(0) !== '<' ) {
         this.postMessageToChannel( this.channels[1].name, "Hello, I am replying" );
     }
 };
 
-NewBot.prototype.handlePictures = function( message ) {
+NewBot.prototype._handlePictures = function( message ) {
     console.log( "Hello" );
     if( message.subtype === 'file_share' ) {
-        // this.postMessageToChannel( this.channels[1].name, "Hello, I am processing a picture" );
-        this.savePicture( message ) 
+        this._savePicture( message ) 
     }
 };
 
-NewBot.prototype.savePicture = function( message ) {
+NewBot.prototype._savePicture = function( message ) {
     this.postMessageToChannel( this.channels[1].name, "Hello, I am processing a picture" );
 };
 
