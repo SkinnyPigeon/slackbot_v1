@@ -74,10 +74,11 @@ NorrisBot.prototype._welcomeMessage = function () {
 };
 
 NorrisBot.prototype._onMessage = function (message) {
-    if (this._isChatMessage(message) &&
-        this._isChannelConversation(message) &&
-        !this._isFromNorrisBot(message) &&
-        this._isMentioningChuckNorris(message)
+    if (this._isChatMessage(message) 
+        // &&
+        // this._isChannelConversation(message) &&
+        // !this._isFromNorrisBot(message) &&
+        // this._isMentioningChuckNorris(message)
     ) {
         this._replyWithRandomJoke(message);
     }
