@@ -40,6 +40,7 @@ NewBot.prototype._welcomeMessage = function () {
 };
 
 NewBot.prototype._onMessage = function( message ) {
+    console.log( message );
     if ( this._isChatMessage( message ) &&
          this._isChannelConversation( message ) &&
          !this._isNotFromNewBot( message )) {
@@ -60,12 +61,13 @@ NewBot.prototype._isChannelConversation = function( message ) {
 };
 
 NewBot.prototype._isNotFromNewBot = function( message ) {
-    console.log( message );
-    return message.user === this.id;
+    return message.subtype === "bot_message";
+
+    // return message.user === this.id;
 };
 
-NewBot.prototype._isMentioningChuckNorris = function( message ) {
-    return message.text.toLowerCase().indexOf( 'chuck norris' ) > -1 ||
+NewBot.prototype._isMentioningNewBot = function( message ) {
+    return message.text.toLowerCase().indexOf( 'newbot' ) > -1 ||
         message.text.toLowerCase().indexOf( this.name ) > -1;
 };
 
