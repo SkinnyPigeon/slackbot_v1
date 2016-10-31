@@ -102,16 +102,16 @@ NorrisBot.prototype._isMentioningChuckNorris = function (message) {
 };
 
 NorrisBot.prototype._replyWithRandomJoke = function (originalMessage) {
-    var self = this;
-    self.db.get('SELECT id, joke FROM jokes ORDER BY used ASC, RANDOM() LIMIT 1', function (err, record) {
-        if (err) {
-            return console.error('DATABASE ERROR:', err);
-        }
+    // var self = this;
+    // self.db.get('SELECT id, joke FROM jokes ORDER BY used ASC, RANDOM() LIMIT 1', function (err, record) {
+    //     if (err) {
+    //         return console.error('DATABASE ERROR:', err);
+    //     }
 
-        var channel = self._getChannelById(originalMessage.channel);
-        self.postMessageToChannel(channel.name, record.joke, {as_user: true});
-        self.db.run('UPDATE jokes SET used = used + 1 WHERE id = ?', record.id);
-    });
+    //     var channel = self._getChannelById(originalMessage.channel);
+    //     self.postMessageToChannel(channel.name, record.joke, {as_user: true});
+    //     self.db.run('UPDATE jokes SET used = used + 1 WHERE id = ?', record.id);
+    // });
 };
 
 NorrisBot.prototype._getChannelById = function (channelId) {
