@@ -1,15 +1,12 @@
 'use strict';
 
 var util = require('util');
-var path = require('path');
-var fs = require('fs');
 var Bot = require('slackbots');
 
 var NewBot = function Constructor(settings) {
     this.settings = settings;
     this.settings.name = this.settings.name || 'NewBot';
     this.user = null;
-    this.db = null;
 };
 
 util.inherits(NewBot, Bot);
@@ -40,17 +37,33 @@ NewBot.prototype._welcomeMessage = function () {
 };
 
 NewBot.prototype._onMessage = function( message ) {
-    console.log( message );
+    // console.log( message );
     if ( this._isChatMessage( message ) &&
          this._isChannelConversation( message ) &&
-         !this._isNotFromNewBot( message )) {
-    this.sayHi();
+         !this._isFromNewBot( message )) {
+    this.handlePictures( message );
+    this.sayHi( message );
     }
 };
 
 NewBot.prototype.sayHi = function( message ) {
-    this.postMessageToChannel( this.channels[1].name, "Hello, I am replying" );
-}
+    console.log( message );
+    if( message.text.charAt(0) !== '<' ) {
+        this.postMessageToChannel( this.channels[1].name, "Hello, I am replying" );
+    }
+};
+
+NewBot.prototype.handlePictures = function( message ) {
+    console.log( "Hello" );
+    if( message.subtype === 'file_share' ) {
+        // this.postMessageToChannel( this.channels[1].name, "Hello, I am processing a picture" );
+        this.savePicture( message ) 
+    }
+};
+
+NewBot.prototype.savePicture = function( message ) {
+    this.postMessageToChannel( this.channels[1].name, "Hello, I am processing a picture" );
+};
 
 NewBot.prototype._isChatMessage = function ( message ) {
     return message.type === 'message' && Boolean( message.text );
@@ -60,16 +73,8 @@ NewBot.prototype._isChannelConversation = function( message ) {
     return typeof message.channel === 'string';
 };
 
-NewBot.prototype._isNotFromNewBot = function( message ) {
+NewBot.prototype._isFromNewBot = function( message ) {
     return message.subtype === "bot_message";
-
-    // return message.user === this.id;
 };
-
-NewBot.prototype._isMentioningNewBot = function( message ) {
-    return message.text.toLowerCase().indexOf( 'newbot' ) > -1 ||
-        message.text.toLowerCase().indexOf( this.name ) > -1;
-};
-
 
 module.exports = NewBot;
