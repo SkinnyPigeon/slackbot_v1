@@ -34,8 +34,7 @@ NorrisBot.prototype.run = function () {
 
 NorrisBot.prototype._onStart = function () {
     this._loadBotUser();
-    // this._connectDb();
-    this._firstRunCheck();
+    this._welcomeMessage();
     this.postMessageToChannel('general', 'Hello channel!');
     this.postMessageToUser('skinnypigeon', 'hello bro!');
 };
@@ -47,26 +46,6 @@ NorrisBot.prototype._loadBotUser = function () {
     })[0];
 };
 
-NorrisBot.prototype._firstRunCheck = function () {
-    // var self = this;
-    // self.db.get('SELECT val FROM info WHERE name = "lastrun" LIMIT 1', function (err, record) {
-    //     if (err) {
-    //         return console.error('DATABASE ERROR:', err);
-    //     }
-
-    //     var currentTime = (new Date()).toJSON();
-
-    //     // this is a first run
-    //     if (!record) {
-    //         self._welcomeMessage();
-    //         return self.db.run('INSERT INTO info(name, val) VALUES("lastrun", ?)', currentTime);
-    //     }
-
-    //     // updates with new last running time
-    //     self.db.run('UPDATE info SET val = ? WHERE name = "lastrun"', currentTime);
-    // });
-};
-
 NorrisBot.prototype._welcomeMessage = function () {
     this.postMessageToChannel(this.channels[0].name, 'Hi guys, roundhouse-kick anyone?' +
         '\n I can tell jokes, but very honest ones. Just say `Chuck Norris` or `' + this.name + '` to invoke me!',
@@ -74,15 +53,17 @@ NorrisBot.prototype._welcomeMessage = function () {
 };
 
 NorrisBot.prototype._onMessage = function (message) {
-    if (this._isChatMessage(message) 
-        // &&
-        // this._isChannelConversation(message) &&
-        // !this._isFromNorrisBot(message) &&
-        // this._isMentioningChuckNorris(message)
-    ) {
-        this._replyWithRandomJoke(message);
+    if ( this._isChatMessage( message ) &&
+         this._isChannelConversation( message ) &&
+         !this._isFromNorrisBot( message )) {
+         // this._replyWithRandomJoke( message );
+     this.sayHi();
     }
 };
+
+NorrisBot.prototype.sayHi = function() {
+    this.postMessageToChannel('general', 'Hello channel!');
+}
 
 NorrisBot.prototype._isChatMessage = function (message) {
     return message.type === 'message' && Boolean(message.text);
@@ -103,24 +84,9 @@ NorrisBot.prototype._isMentioningChuckNorris = function (message) {
 };
 
 NorrisBot.prototype._replyWithRandomJoke = function (originalMessage) {
-    // var self = this;
-    // self.db.get('SELECT id, joke FROM jokes ORDER BY used ASC, RANDOM() LIMIT 1', function (err, record) {
-    //     if (err) {
-    //         return console.error('DATABASE ERROR:', err);
-    //     }
-
-    //     var channel = self._getChannelById(originalMessage.channel);
-    //     self.postMessageToChannel(channel.name, record.joke, {as_user: true});
-    //     self.db.run('UPDATE jokes SET used = used + 1 WHERE id = ?', record.id);
-    // });
     this.postMessageToChannel('general', 'Hello channel!');
     this.postMessageToUser('skinnypigeon', 'hello bro!');
 };
 
-NorrisBot.prototype._getChannelById = function (channelId) {
-    return this.channels.filter(function (item) {
-        return item.id === channelId;
-    })[0];
-};
 
 module.exports = NorrisBot;
