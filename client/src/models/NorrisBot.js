@@ -53,15 +53,17 @@ NorrisBot.prototype._welcomeMessage = function () {
 };
 
 NorrisBot.prototype._onMessage = function (message) {
+    console.log( message );
     if ( this._isChatMessage( message ) &&
          this._isChannelConversation( message ) &&
          !this._isFromNorrisBot( message )) {
          // this._replyWithRandomJoke( message );
-     this.sayHi();
+     this.sayHi( message );
     }
 };
 
-NorrisBot.prototype.sayHi = function() {
+NorrisBot.prototype.sayHi = function( message ) {
+    console.log( message );
     this.postMessageToChannel('general', 'Hello channel!');
 }
 
