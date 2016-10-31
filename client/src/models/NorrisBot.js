@@ -8,7 +8,7 @@ var Bot = require('slackbots');
 
 var NorrisBot = function Constructor(settings) {
     this.settings = settings;
-    this.settings.name = this.settings.name || 'norrisbot';
+    this.settings.name = this.settings.name || 'NorrisBot';
     // this.dbPath = settings.dbPath || path.resolve(process.cwd(), 'data', 'norrisbot.db');
 
     this.user = null;
@@ -19,13 +19,7 @@ var NorrisBot = function Constructor(settings) {
 util.inherits(NorrisBot, Bot);
 
 NorrisBot.prototype.run = function () {
-    NorrisBot.super_.call(this, this.settings);
-
-    this.on('start', this._onStart);
-    this.on('message', this._onMessage);
-};
-
-NorrisBot.prototype.run = function () {
+    console.log( "hello" );
     NorrisBot.super_.call(this, this.settings);
 
     this.on('start', this._onStart);

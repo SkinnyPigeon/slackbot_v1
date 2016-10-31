@@ -5,11 +5,12 @@ var path = require( 'path' );
 var fs = require( 'fs' );
 var Bot = require( 'slackbots' );
  
-var NewBot = function( settings ) {
+var NewBot = function Constructor( settings ) {
     this.settings = settings;
     this.settings.name = this.settings.name || 'NewBot';
     this.user = null;
     this.db = null;
+
     this.run();
 };
 
@@ -17,11 +18,11 @@ util.inherits( NewBot, Bot );
 
 NewBot.prototype = {
 
-    run: function() {
-        NewBot.super_.call( this, this.settings );
-        this.on( 'start', this._onStart );
-        this.on( 'message', this._onMessage );
-    },
+    // run: function() {
+    //     NewBot.super_.call( this, this.settings );
+    //     this.on( 'start', this._onStart );
+    //     this.on( 'message', this._onMessage );
+    // },
 
     _onStart: function() {
         this._loadBotUser();
